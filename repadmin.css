@@ -1,0 +1,59 @@
+body {
+	background-color:grey;
+}
+
+#wrapper {
+	background-color:white;
+	width: 900px;
+	text-align: center;
+	margin: 0px 0px 0px 50%;
+	left: -450px;
+	position: relative;
+}
+
+table {
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+table th {
+    background-color: #CCCCCC;   
+    line-height: 30px;
+}
+
+#standardView {
+	width:500px;
+    position: relative;
+    margin-left: 50%;
+    left:-250px;
+	display:block;
+}
+
+#expandedView {
+	width:880px;
+    position: relative;
+    margin-left: 50%;
+    left:-440px;
+	display:none;
+}
+
+#instructions {
+    position: relative;
+    width:550px;
+    margin-left:50%;
+    left:-275px;
+	text-align:left;
+}
+
+.goodNode {
+	background-color: green;
+}
+.warnNode {
+	background-color: yellow;
+}
+.errNode {
+	background-color: orange;
+}
+.tombNode {
+	background-color: red;
+}

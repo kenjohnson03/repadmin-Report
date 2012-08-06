@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Repadmin Report</title>
+<link rel="stylesheet" type="text/css" href="repadmin.css" />
+<script type="text/javascript" src="repadmin.js"></script>
+<script type="text/javascript">
+function standardView(){
+	document.getElementById("expandedView").style.display="none";
+	document.getElementById("standardView").style.display="block";
+}
+function expandedView(){
+	document.getElementById("standardView").style.display="none";
+	document.getElementById("expandedView").style.display="block";
+}
+</script>
+</head>
+<body onload="repadminParse('repadmin.csv')">
+<div id="wrapper">
+	<div id="updated"></div>
+	<div id="buttons">
+		<button onclick="repadminParse('repadmin.csv')">Refresh</button>
+		<button onclick="standardView()">Standard</button>
+		<button onclick="expandedView()">Expanded</button>
+	</div>
+	<div id="standardView">standard</div>
+	<div id="expandedView">expanded</div>
+	<div id="instructions">
+		<ul>
+			<li>Originating Site replicates to all domain controllers within a site and to a single bridgehead
+			server in each subordinate site</li>
+			<li>Originating Server replicates to a subordinate servers</li>
+			<li>Destination Site replicates with the originating site based on NTDS site links in AD</li>
+			<li>Destination Server replicates with the originating servers based on NTDS settings seen in AD Sites & Services</li>
+			<li>Last Failure shows last date and time that an attempt was made to replicate with the Destination Server and was unsuccessful</li>
+			<li>Last Success shows last date and time a complete replication was performed</li>
+			<li>Status is a color indicator on how serious the problem is</li>
+		</ul>
+	</div>
+</div>
+</body>
+</html>

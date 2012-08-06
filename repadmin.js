@@ -1,6 +1,6 @@
 //Global Variables to access data for sorting
-var repadmin_lines = new Array();
-var repadmin_nodeNames = new Object();
+var lines = new Array();
+var nodeNames = new Object();
 
 //Function used to pull the data from the xml file
 function repadminParse(docName){
@@ -42,6 +42,7 @@ function repadminParse(docName){
 				
 			//iterate through each line
 			for(i=0;i<docLines.length;i++){
+				
 				if(docLines[i].indexOf("INFO") >= 0){
 					//remove the 4th column containing the DC= info
 					first_pass = docLines[i].split("\"");
@@ -60,36 +61,36 @@ function repadminParse(docName){
 						 lines[j].destSite == csvContent[4] && lines[j].destSrv == csvContent[5]){
 							duplicate = j;
 						}
-						
-						result = assessHealth(csvContent[9]);
-						
-						//if it's a duplicate only update the status and dates
-						if(result !="0" && duplicate != "a"){
-							//determine which error is worse 
-							largerProblem = compareDate(lines[duplicate].lastSuccess,csvContent[9]);
-							if(largerProblem == "1"){
-								lines[duplicate].lastFail = csvContent[8];
-								lines[duplicate].lastSuccess = csvContent[9];
-								lines[duplicate].status = result;
-							}
-						} else if(duplicate == "a"){
-							//only if it's not a duplicate add another item
-							var line = new Object();
-							line.origSite = csvContent[1];
-							line.origSrv = csvContent[2];
-							line.destSite = csvContent[4];
-							line.destSrv = csvContent[5];
-							line.lastFail = csvContent[8];
-							line.lastFail = csvContent[9];
-							line.status = result;
-							lines.push(line);
-							
-							nodeNames.origSite.push(csvContent[1]);
-							nodeNames.origSrv.push(csvContent[2]);
-							nodeNames.destSite.push(csvContent[4]);
-							nodeNames.destSrv.push(csvContent[5]);
-						}
 					}
+					result = assessHealth(csvContent[9]);
+						
+					//if it's a duplicate only update the status and dates
+					if(result !="0" && duplicate != "a"){
+						//determine which error is worse 
+						largerProblem = compareDate(lines[duplicate].lastSuccess,csvContent[9]);
+						if(largerProblem == "1"){
+							lines[duplicate].lastFail = csvContent[8];
+							lines[duplicate].lastSuccess = csvContent[9];
+							lines[duplicate].status = result;
+						}
+					} else if(duplicate == "a"){
+						//only if it's not a duplicate add another item
+						var line = new Object();
+						line.origSite = csvContent[1];
+						line.origSrv = csvContent[2];
+						line.destSite = csvContent[4];
+						line.destSrv = csvContent[5];
+						line.lastFail = csvContent[8];
+						line.lastSuccess = csvContent[9];
+						line.status = result;
+						lines.push(line);
+							
+						nodeNames.origSite.push(csvContent[1]);
+						nodeNames.origSrv.push(csvContent[2]);
+						nodeNames.destSite.push(csvContent[4]);
+						nodeNames.destSrv.push(csvContent[5]);
+					}
+				
 				} else if(docLines[i].indexOf("Updat") >= 0){
 					document.getElementById("updated").innerHTML = docLines[i];
 				}
@@ -101,7 +102,7 @@ function repadminParse(docName){
 	}
 	
 	//initiate the GET comand to retrieve the CSV
-	xmlhttp.open("GET",docname,true);
+	xmlhttp.open("GET",docName,true);
 	xmlhttp.send();
 }
 
@@ -110,7 +111,7 @@ function repadminParse(docName){
 //accepts dates in the "01-01-2001 01:01:01" format
 function assessHealth(date_in){
 	//sets the regular expression for a valid date
-	var validDate = /^\d{4}[-](\d{1}|\d{2})[-](\d{1}|\d{2})\s(\d{1}|\d{2})\s(\d{1}|\d{2})[:](\d{1}|\d{2})[:](\d{1}|\d{2})$/
+	var validDate = /^\d{4}[-](\d{1}|\d{2})[-](\d{1}|\d{2})\s(\d{1}|\d{2})[:](\d{1}|\d{2})[:](\d{1}|\d{2})$/
 	
 	//Determine health using last success date
 	if(validDate.test(date_in)){
@@ -158,7 +159,7 @@ function assessHealth(date_in){
 //accepts dates in the "01-01-2001 01:01:01" format
 function compareDate(date1,date2){
 	//sets the regular expression for a valid date
-	var validDate = /^\d{4}[-](\d{1}|\d{2})[-](\d{1}|\d{2})\s(\d{1}|\d{2})\s(\d{1}|\d{2})[:](\d{1}|\d{2})[:](\d{1}|\d{2})$/
+	var validDate = /^\d{4}[-](\d{1}|\d{2})[-](\d{1}|\d{2})\s(\d{1}|\d{2})[:](\d{1}|\d{2})[:](\d{1}|\d{2})$/
 		
 	//Determine if both dates are valid
 	if(validDate.test(date1) && validDate.test(date2)){
@@ -204,7 +205,7 @@ function nodeSort(sortBy){
 		"<th>Status</th></tr>";
 	var standardHeaders = "<tr><th onclick=\"nodeSort('destSrv')\">"+
 		"Destination Server</th><th>Status</th></tr>";
-	var tombstone = "<table><caption><h2>Tomkbstone</h2></caption>"+expandedHeaders;
+	var tombstone = "<table><caption><h2>Tombstone</h2></caption>"+expandedHeaders;
 	var problems = "<table><caption><h2>Replication > 7 days</h2></caption>"+expandedHeaders;
 	var warnings = "<table><caption><h2>Replication > 24 hrs</h2></caption>"+expandedHeaders;
 	var good = "<table><caption><h2>Replication Normal</h2></caption>"+expandedHeaders;
@@ -312,7 +313,7 @@ function nodeSort(sortBy){
 	good+="</table>";
 	warnings+="</table>";
 	problems+="</table>";
-	tobmbstone+="</table>";
+	tombstone+="</table>";
 	
 	//clear the current contents
 	document.getElementById("standardView").innerHTML = "";
