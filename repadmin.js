@@ -263,7 +263,7 @@ function nodeSort(sortBy){
 							"<td>"+unusedLines[j].destSite+"</td><td>"+unusedLines[j].destSrv+"</td>"+
 							"<td>"+unusedLines[j].lastFail+"</td><td>"+unusedLines[j].lastSuccess+"</td>"+
 							"<td class='tombNode'></td></tr>";
-						condensedWarnings+="<tr><td>"+unusedLines[j].origSrv+"</td><td class='tombNode'></td></tr>";
+						condensedTombstone+="<tr><td>"+unusedLines[j].origSrv+"</td><td class='tombNode'></td></tr>";
 					}
 					unusedLines.splice(j,1);
 				}
@@ -301,7 +301,7 @@ function nodeSort(sortBy){
 							"<td>"+unusedLines[j].destSite+"</td><td>"+unusedLines[j].destSrv+"</td>"+
 							"<td>"+unusedLines[j].lastFail+"</td><td>"+unusedLines[j].lastSuccess+"</td>"+
 							"<td class='tombNode'></td></tr>";
-						condensedWarnings+="<tr><td>"+unusedLines[j].origSrv+"</td><td class='tombNode'></td></tr>";
+						condensedTombstone+="<tr><td>"+unusedLines[j].origSrv+"</td><td class='tombNode'></td></tr>";
 					}
 					unusedLines.splice(j,1);
 				}
