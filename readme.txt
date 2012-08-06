@@ -1,3 +1,5 @@
+See LICENSE file for copyright information.
+
 Setup for Windows Server 2008 R2
 
 1.  Install AD DS Tools.  Located under features in the Server Manager.
